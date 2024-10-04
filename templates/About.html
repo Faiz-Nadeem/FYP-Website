@@ -1,0 +1,722 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepfake Detection Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto:wght@400&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;       
+            background-color: black;
+            color: white;
+        }
+        .nav {
+            position: fixed;
+            display: flex;
+            padding: 20px 20px 20px 40px;
+            background-color: #161617;
+            width: 100%;
+            box-sizing: border-box;
+            align-items: center;
+            z-index: 10;
+            top: 0;
+            left: 0;
+            justify-content: space-between;
+        }
+        
+        .links {
+            display: flex;
+        }
+        
+        .links ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            align-items: center;
+        }
+        
+        .links li {
+            margin-left: 73px;
+        }
+        
+        .links li a {
+            text-decoration: none;
+            color: white;
+        }
+        
+        .links a:hover {
+            background: linear-gradient(90deg, rgba(0, 123, 255, 1) 1%, rgba(165, 80, 197, 1) 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo img {
+            width: 33px;
+            height: 30px;
+        }
+        .btn {
+            background: transparent;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: none;
+            position: relative;
+            font-size: 15px;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            overflow: hidden; /* Ensure pseudo-element stays within the button */
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+         
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 12px;
+        padding: 2px; /* Adjust the thickness of the border */
+        background: linear-gradient(90deg, rgba(0, 123, 255, 1) 1%, rgba(165, 80, 197, 1) 80%);
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: destination-out;
+                mask-composite: subtract;
+        transition: transform 0.3s ease, background 0.3s ease;
+    }
+    
+    .btn:hover {
+        transform: scale(1.05);
+        color: rgba(165, 80, 197, 1);
+    }
+   
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    .popup-content {
+        background-color: #292929;
+        padding: 40px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+        position: relative;
+    }
+    
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        cursor: pointer;
+        color: white;
+    }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    form label {
+        margin-bottom: 5px;
+        text-align: left;
+    }
+    
+    form input {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    form .btn {
+        margin-top: 10px;
+        background: rgb(153, 19, 76);
+        background: linear-gradient(90deg, rgba(0, 123, 255, 1) 1%, rgba(165, 80, 197, 1) 80%);
+        color: white;
+    }
+    .first {
+        display: flex;
+        height: 50%;
+        position: sticky;
+        background-color: #161617;
+        top: 70px;
+        padding: 25px 30px 200px 30px;
+        margin: 90px 0px 0px 0px;
+        border-radius: 12px;
+    }
+    .home {
+        margin-bottom: 30px;
+    }
+    
+    .home img {
+        margin: 13px 10px 0px 0px;
+        width: 20px;
+        height: 20px;
+    }
+    
+    .profile2 {
+        margin-bottom: 30px;
+    }
+    
+    .profile2 img {
+        margin: 13px 10px 0px 0px;
+        width: 20px;
+        height: 20px;
+    }
+    
+    .explore {
+        margin-bottom: 30px;
+    }
+    
+    .explore img {
+        margin: 13px 10px 0px 0px;
+        width: 20px;
+        height: 20px;
+    }
+    
+    .about img {
+        margin: 13px 10px 0px 0px;
+        width: 20px;
+        height: 20px;
+    }
+    .nav1 {
+        margin-top: 140px;
+    }
+    .articles {
+        display: flex;
+    }
+    .About {
+        display: flex;
+    }
+    .detail {
+        margin: 90px 90px 20px 80px;
+    }
+    .slider-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px; /* Set the max-width as needed */
+        margin: auto;
+        overflow: hidden;
+        border-radius: 10px;
+        margin-top: 50px; /* Adjust this margin as needed */
+    }
+
+    .slides {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+        min-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .slide img {
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        border-radius: 45%;
+        background-color: rgba(0, 0, 0, 0.5);
+        user-select: none;
+    }
+
+    .prev {
+        left: 10px;
+    }
+
+    .next {
+        right: 10px;
+    }
+
+    .prev:hover, .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .audio-container {
+        margin: 50px;
+    }
+    
+    .audio-container h3 {
+        margin-bottom: 10px;
+        color: #c8c7c7;
+    }
+    
+    .audio-container audio {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+
+    .left-right {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .left-right .slider-container {
+        flex: 1;
+        margin-right: 20px;
+    }
+    
+    .left-right .audio-container {
+        flex: 1;
+    }
+    .info-section {
+       
+        color: white;
+        padding: 50px 20px;
+        text-align: center;
+    }
+    
+    .info-section h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+        color: #e0e0e0;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .info-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+    
+    .info-box {
+        background-color: #1c1c1c;
+        border-radius: 10px;
+        padding: 20px;
+        width: 90%;
+        
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .info-box:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .info-box h3 {
+        font-size: 28px;
+        margin-bottom: 15px;
+        color: white;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .info-box p {
+        font-size: 15px;
+       
+    }
+    
+    @media (max-width: 768px) {
+        .info-container {
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+    .team-section {
+       
+        color: white;
+        padding: 50px 20px;
+        text-align: center;
+    }
+    
+    .team-section h2 {
+        font-size: 36px;
+        margin-bottom: 40px;
+       
+    }
+    
+    .team-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .team-member {
+        background-color: #292929;
+        border-radius: 10px;
+        padding: 20px;
+        width: 250px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .team-member:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .team-member img {
+       
+        border-radius: 50%;
+        height: 150px;
+        object-fit: cover;
+        margin-bottom: 15px;
+    }
+    
+    .team-member h3 {
+        font-size: 24px;
+        margin: 10px 0;
+        color: #7089f7;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .team-member p {
+        font-size: 16px;
+        
+    }
+    .custom-footer {
+        background-color: #0d0d0d;
+        padding: 20px 0;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid #333;
+    }
+    
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        max-width: 1200px;
+    }
+    
+    .footer-left, .footer-center, .footer-right {
+        display: flex;
+        align-items: center;
+    }
+    
+    .footer-left {
+        flex: 2;
+        display: flex;
+    }
+    
+    .footer-left .brain-img {
+        height: 60px;
+        margin-right: 20px;
+    }
+    
+    .footer-left h2 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    
+    .footer-left p {
+        margin: 5px 0 0;
+        font-size: 14px;
+        color: #b3b3b3;
+    }
+    
+    .footer-center {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .read-more-btn {
+        border: 1px solid #666;
+        background-color: transparent;
+        color: #ffffff;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    
+    .read-more-btn:hover {
+        background-color: #333;
+    }
+    
+    .footer-right {
+        flex: 1;
+        text-align: right;
+    }
+    
+    .user-icons {
+        display: flex;
+        justify-content: flex-end;
+        gap: -10px;
+        margin-bottom: 10px;
+    }
+    
+    .user-icon {
+        width: 29px;
+        height: 29px;
+        border-radius: 50%;
+        border: 2px solid #ffffff;
+    }
+    
+    .user-count {
+        font-size: 14px;
+        color: #b3b3b3;
+        line-height: 1.2;
+    }
+    #deepfake-impacts {
+        background-color: #1c1c1c;
+        color: white;
+        padding: 40px;
+        border-radius: 12px;
+        margin: 20px 0;
+    }
+    
+    #deepfake-impacts .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    #deepfake-impacts h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    
+    #deepfake-impacts .impact {
+        margin-bottom: 30px;
+    }
+    
+    #deepfake-impacts .impact h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    #deepfake-impacts .impact p {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    #deepfake-impacts .impact img {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        border-radius: 8px;
+    }
+    
+  
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="logo">
+            <img src="{% static 'images/none.png' %}" alt="Logo">
+        </div>
+        <div class="links">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'About' %}">About</a></li>
+                <li><a href="{% url 'Articles' %}">Articles</a></li>
+                <li style="margin-right: 73px;"><button id="signupBtn" class="btn">Sign Up</button></li>
+            </ul>
+        </div>
+    </nav>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <!-- <div class="pop-left">
+                 <video src="static/videos/cubic.mp4" controls></video>
+            </div> -->
+            <div class="pop-right">
+                <h2>Signup</h2>
+                <form id="signupForm">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <button type="submit" class="btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="About">
+        <div class="first">
+            <div class="nav1">
+                <div class="home">
+                    <a href="{% url 'home' %}"><img src="{% static 'images/home.png' %}" alt="Home"></a>
+                </div>
+                <div class="explore">
+                    <a href="{% url 'detect_ai' %}"><img src="{% static 'images/upload.png' %}" alt="Explore"></a>
+                </div>
+                <div class="profile2">
+                    <a href="{% url 'About' %}"><img src="{% static 'images/profile.png' %}" alt="Profile"></a>
+                </div>
+                <div class="about">
+                    <a href="{% url 'Articles' %}"><img src="{% static 'images/about.png' %}" alt="About"></a>
+                </div>
+            </div>
+        </div>
+        <div class="detail">
+        <div class="sec1">
+            <p style="font-size:30px;">What is Deepfakes?</p>
+            <p style="color:#c8c7c7; font-size:14px;"> Deepfake technology uses artificial intelligence to create hyper-realistic fake audio and video content, often making it appear as if someone is saying or doing something they never did. While this technology can have creative and legitimate uses, it also poses significant risks. Deepfakes can be used to spread misinformation, damage reputations, and manipulate public opinion, making it increasingly difficult to discern truth from deception in the digital age.</p>
+            <div class="left-right">
+                <div class="slider-container">
+                    <div class="slides">
+                        <div class="slide">
+                            <img src="{% static 'images/image3.jpeg' %}" alt="Image 1">
+                        </div>
+                        <div class="slide">
+                            <img src="{% static 'images/image2.jpeg' %}" alt="Image 2">
+                        </div>
+                        <div class="slide">
+                            <img src="{% static 'images/image1.jpg' %}" alt="Image 3">
+                        </div>
+                        <!-- Add more slides as needed -->
+                    </div>
+        
+                    <span class="prev" onclick="moveSlide(-1)">&#10094;</span>
+                    <span class="next" onclick="moveSlide(1)">&#10095;</span>
+                </div>
+                <div class="audio-container">
+                    <h3>Real</h3>
+                    <audio controls>
+                        <source src="path-to-your-real-audio-file.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <h3>Fake</h3>
+                    <audio controls>
+                        <source src="path-to-your-fake-audio-file.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+        </div>
+        <div class="sec2">
+           
+            <section id="deepfake-impacts">
+                <div class="container">
+                    <h2 style="font-size:30px;">Impacts of Deepfakes</h2>
+                    <div class="impact">
+                        <h3>Political Manipulation</h3>
+                        <p style="color:#c8c7c7; font-size:14px;">Example: “Deepfake Images in Political Campaigns”</p>
+                        <p style="color:#c8c7c7;font-size:14px;">Description: Deepfake images have been used in political campaigns to spread false information. For example, during the 2019 Indian general elections, manipulated images were circulated on social media to mislead voters about political candidates. Such images can be used to create misleading narratives or smear campaigns.</p>
+                        <img src="{% static 'images/click.png' %}" alt="Political Manipulation" style="width:20px; height:20px;">
+                        <a href="https://www.tandfonline.com/doi/full/10.1080/19472498.2022.2095596" target="_blank" style="text-decoration:none; color:#767474;">Source</a>
+                    </div>
+                    <div class="impact">
+                        <h3>Media and Entertainment</h3>
+                        <p style="color:#c8c7c7; font-size:14px;">Example: “Deepfake Audio in Media”</p>
+                        <p style="color:#c8c7c7; font-size:14px;">Description: In 2020, deepfake audio technology was used to create misleading content featuring well-known figures. A notable incident involved a deepfake audio clip mimicking the voice of actor Tom Hanks to produce a fake podcast episode. This incident confused listeners and sparked debates about the authenticity of media content and the potential misuse of deepfake technology in creating fraudulent media.</p>
+                        <img src="{% static 'images/click.png' %}" alt="Political Manipulation" style="width:20px; height:20px;">
+                        <a href="#" target="_blank" style="text-decoration:none; color:#767474;">Source: <strong>BBC NEWS</strong></a>
+                    </div>
+                    <div class="impact">
+                        <h3>Privacy Violations</h3>
+                        <p style="color:#c8c7c7; font-size:14px;">Example: “Deepfake Images in Non-Consensual Content”</p>
+                        <p style="color:#c8c7c7;font-size:14px;">Description: In 2018, a significant scandal emerged involving deepfake technology used to create non-consensual explicit content. High-profile celebrities such as Gal Gadot, Scarlett Johansson, and Emma Watson were among those whose faces were superimposed onto pornographic videos without their consent. This misuse of deepfake technology led to severe privacy violations and emotional distress for the victims. The scandal raised urgent questions about the ethical use of such technology and prompted discussions about the need for stricter regulations and advanced detection methods to combat the issue.</p>
+                        <img src="{% static 'images/click.png' %}" alt="Political Manipulation" style="width:20px; height:20px;">
+                        <a href="#" target="_blank" style="text-decoration:none; color:#767474;">Source: <strong>BBC NEWS</strong></a>
+                    </div>
+                    <div class="impact">
+                        <h3>Security Threats</h3>
+                        <p style="color:#c8c7c7; font-size:14px;">Example: “Deepfake Voice Scam”</p>
+                        <p style="color:#c8c7c7; font-size:14px;">Description: In 2019, a CEO was tricked into transferring €220,000 to a fraudulent account after receiving a deepfake audio message that mimicked the voice of his boss. This incident highlighted how deepfakes can be used in financial scams and security breaches.</p>
+                        <img src="{% static 'images/click.png' %}" alt="Political Manipulation" style="width:20px; height:20px;">
+                        <a href="https://www.wsj.com/articles/fraudsters-use-ai-to-mimic-ceos-voice-in-unusual-cybercrime-case-11567157402" target="_blank" style="text-decoration:none; color:#767474;">Source</a>
+                    </div>
+                  
+                </div>
+            </section>
+            <section class="info-section">
+                <div class="info-container">
+                    <div class="info-box">
+                        <h2 style="color:white;">Our Mission</h2>
+                        <p style="font-size:14px;">Our goal is to combat the growing threat of deepfakes by leveraging advanced technologies and innovative methods. We aim to enhance detection capabilities, educate the public, and contribute to a safer digital environment.</p>
+                    </div>
+                    <div class="info-box">
+                        <h2 style="color:white;">Why It Matters</h2>
+                        <p style="font-size:14px;">Deepfake technology presents significant risks to digital trust and security. By advancing detection methods, we help prevent misinformation and protect the integrity of media. Our work benefits individuals and organizations by providing reliable tools to combat the manipulation of digital content.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="team-section">
+                <h2>Meet Our Team</h2>
+                <div class="team-container">
+                    <div class="team-member">
+                        <h3>Zohaib Sathio</h3>
+                        <p>Team Lead</p>
+                    </div>
+                    <div class="team-member">
+                        <h3>Faiz Nadeem</h3>
+                        <p>Member</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+            </div>
+    </div>
+    <footer class="custom-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <img src="{% static 'images/none.png' %}" alt="Brain Image" class="brain-img">
+                <div>
+                    <h2>Deepfakes Detector</h2>
+                    <p>"Spot Deepfakes with Confidence: Your Go-To Tool for Authentic Images and Audio."</p>
+                </div>
+            </div>
+            <div class="footer-center">
+                <button class="read-more-btn">Read More</button>
+            </div>
+            <div class="footer-right">
+                <div class="user-icons">
+                    <img src="{% static 'images/linkdin.png' %}" alt="User 1" class="user-icon">
+                    <img src="{% static 'images/twitter.png' %}" alt="User 2" class="user-icon">
+                    <img src="{% static 'images/facebook.png' %}" alt="User 3" class="user-icon">
+                </div>
+                <p class="user-count">120K<br>Number of users</p>
+            </div>
+        </div>
+    </footer>
+   
+   </body>
+   <script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function showSlide(index) {
+        if (index >= slides.length) slideIndex = 0;
+        if (index < 0) slideIndex = slides.length - 1;
+        document.querySelector('.slides').style.transform = 'translateX(' + (-slideIndex * 100) + '%)';
+    }
+
+    function moveSlide(n) {
+        slideIndex += n;
+        showSlide(slideIndex);
+    }
+
+    showSlide(slideIndex);
+</script>
+
+</html>

@@ -1,0 +1,896 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Popup Example</title>
+   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto:wght@400&display=swap');
+    body {
+        font-family: 'Roboto', sans-serif;        
+        background-color: black;
+        color: white;
+    }
+    
+    .home-main {
+        margin: 30px 0px;
+        display: flex;
+    }
+    
+    .first {
+        height: 50%;
+        position: sticky;
+        background-color: #161617;
+        top: 89px;
+        padding: 25px 30px 200px 30px;
+        margin: 45px 0px 0px 0px;
+        border-radius: 12px;
+    }
+    
+    .btn {
+        background: transparent;
+        padding: 12px 20px;
+        border-radius: 12px;
+        border: none;
+        position: relative;
+        font-size: 15px;
+        color: white;
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+        overflow: hidden; /* Ensure pseudo-element stays within the button */
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+    
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 12px;
+        padding: 2px; /* Adjust the thickness of the border */
+        background: linear-gradient(90deg, rgba(0, 123, 255, 1) 1%, rgba(165, 80, 197, 1) 80%);
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: destination-out;
+                mask-composite: subtract;
+        transition: transform 0.3s ease, background 0.3s ease;
+    }
+    
+    .btn:hover {
+        transform: scale(1.05);
+        color: rgba(165, 80, 197, 1);
+    }
+    
+    .btn:hover::before {
+        background: linear-gradient(90deg, rgba(0, 123, 255, 1) 1%, rgba(165, 80, 197, 1) 80%);
+    }
+    
+    .btn a {
+        color: white;
+        text-decoration: none;
+        position: relative;
+        z-index: 1;
+        display: block; /* Ensure anchor tag takes full button space */
+        height: 100%; /* Ensure anchor tag takes full button height */
+        width: 100%; /* Ensure anchor tag takes full button width */
+        line-height: 1; /* Adjust line height to match button's content */
+    }
+    
+    
+    .nav1 {
+        margin-top: 140px;
+    }
+    
+    .nav {
+        position: fixed;
+        display: flex;
+        padding: 20px 20px 20px 40px;
+        background-color: #161617;
+        width: 100%;
+        box-sizing: border-box;
+        align-items: center;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        justify-content: space-between;
+    }
+    
+    .links {
+        display: flex;
+    }
+    
+    .links ul {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        align-items: center;
+    }
+    
+    .links li {
+        margin-left: 73px;
+    }
+    
+    .links li a {
+        text-decoration: none;
+        color: white;
+    }
+    
+    .links a:hover {
+        background: linear-gradient(90deg, rgba(0, 123, 255, 1) 1%, rgba(165, 80, 197, 1) 80%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .logo img {
+        width: 33px;
+        height: 30px;
+    }
+    
+    .second {
+        flex: 1;
+        padding: 20px;
+        position: relative;
+        overflow-y: auto;
+    }
+    
+    .first-content {
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1;
+        display: flex;
+        padding: 76px 36px;
+    }
+    
+    .left {
+        flex: 1;
+    }
+    
+    .right {
+        flex: 1;
+        opacity: 0.7;
+        background: transparent;
+        border-radius: 10px;
+        padding: 12px 25px;
+        font-size: 15px;
+        z-index: 0;
+        position: relative;
+    }
+    
+    .right::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 10px;
+        padding: 2px; /* Adjust the thickness of the border */
+        background: radial-gradient(circle, rgba(165, 80, 197, 0.651) 0%, #950229 100%);
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: destination-out;
+                mask-composite: subtract;
+    }
+    
+    .right p {
+        position: relative;
+        z-index: 1;
+    }
+    
+    
+    .section1 {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+    }
+    
+    .robot {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    
+    .home {
+        margin-bottom: 30px;
+    }
+    
+    .home img {
+        margin: 13px 10px 0px 0px;
+        width: 20px;
+        height: 20px;
+    }
+    
+    .profile2 {
+        margin-bottom: 30px;
+    }
+    
+    .profile2 img {
+        margin: 13px 10px 0px 0px;
+        width: 20px;
+        height: 20px;
+    }
+    
+    .explore {
+        margin-bottom: 30px;
+    }
+    
+    .explore img {
+        margin: 13px 10px 0px 0px;
+        width: 20px;
+        height: 20px;
+    }
+    
+    .about img {
+        margin: 13px 10px 0px 0px;
+        width: 20px;
+        height: 20px;
+    }
+    
+    .section2 {
+        background: rgb(31, 0, 25);
+        border-radius: 12px;
+        margin-top: -70px;
+        padding: 20px;
+    }
+    
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .grid-item {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .video-container {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%;
+    }
+    
+    video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+    
+    .overlay-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 5px 10px;
+        border-radius: 3px;
+        font-size: 18px;
+        text-align: center;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .grid-item {
+        opacity: 0;
+    }
+    
+    .fade-in {
+        animation: fadeIn 1s forwards;
+    }
+    
+    .third {
+        height: 50%;
+        position: sticky;
+        background-color: #161617;
+        top: 89px;
+        padding: 12px 30px 80px 30px;
+        margin: 45px 10px 0px 0px;
+        border-radius: 12px;
+    }
+    
+    .block1 {
+        display: flex;
+        align-items: center;
+        background-color: #2c2c2d;
+        padding: 20px 30px 20px 30px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .block1 img {
+        width: 43px;
+        height: 43px;
+    }
+    
+    .blocks h3 {
+        margin-bottom: 30px;
+    }
+    
+    .block-content {
+        margin-left: 15px;
+    }
+    
+    .block-content a {
+        text-decoration: none;
+        color: #646363;
+        font-size: 13px;
+    }
+    
+    .block-content p {
+        font-size: 15px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    .popup-content {
+        background-color: #292929;
+        padding: 40px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+        position: relative;
+    }
+    
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        cursor: pointer;
+        color: white;
+    }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    form label {
+        margin-bottom: 5px;
+        text-align: left;
+    }
+    
+    form input {
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    form .btn {
+        margin-top: 10px;
+        background: rgb(153, 19, 76);
+        background: linear-gradient(90deg, rgba(153, 19, 76, 1) 1%, rgba(165, 80, 197, 1) 80%);
+        color: white;
+    }
+    
+    .section3 {
+        margin: 55px 20px;
+        padding: 20px;
+    }
+    
+    .section3 h1 {
+        text-align: center;
+    }
+    
+    .cards {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 46px;
+    }
+    
+    .card {
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+        text-align: center;
+        margin: 0 10px;
+    }
+    
+    .card img {
+        display: block;
+        margin: 0 auto;
+        padding-bottom: 10px;
+    }
+    
+    .card p {
+        margin: 0;
+    }
+    .section4 {
+        padding:50px;
+        display:flex;
+        position:relative;
+       align-items:center;
+        
+    }
+    .s4-text{
+       flex:1;
+       
+    }
+    .s4-image img{
+        flex:1;
+        width: 504px;
+        height: 313px;
+    }
+    .mission-container {
+        display: flex;
+        margin: 5px;
+        display: flex;
+        justify-content: center; 
+        align-items: center; /* Center-aligns the buttons vertically (if needed) */
+        gap: 10px;
+    }
+    
+    .mission {
+       
+        padding: 10px 20px; 
+        border: 2px solid #646363;
+        opacity:0.8;
+        color: white; 
+        border-radius: 10px; 
+        cursor: pointer; 
+        font-size: 16px; 
+        background-color:black;
+    }
+    .mission1 {
+       
+        padding: 10px 20px; 
+        border: 2px solid #646363;
+        opacity:0.8;
+        color: white; 
+        cursor: pointer; 
+        font-size: 16px; 
+        background: transparent;
+        border-radius: 12px;
+        border: none;
+        position: relative;
+        text-align: center;
+        display: inline-block;
+        overflow: hidden; 
+        transition: transform 0.3s ease, color 0.3s ease;
+        
+    }
+    .mission1::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 12px;
+        padding: 2px; /* Adjust the thickness of the border */
+        background: linear-gradient(90deg, rgba(153, 19, 76, 1) 1%, rgba(165, 80, 197, 1) 80%);
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: destination-out;
+                mask-composite: subtract;
+        transition: transform 0.3s ease, background 0.3s ease;
+    }
+    
+    .mission1:hover {
+        transform: scale(1.05);
+        color: rgba(165, 80, 197, 1);
+    }
+    
+    .custom-footer {
+        background-color: #0d0d0d;
+        padding: 20px 0;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: 1px solid #333;
+    }
+    
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        max-width: 1200px;
+    }
+    
+    .footer-left, .footer-center, .footer-right {
+        display: flex;
+        align-items: center;
+    }
+    
+    .footer-left {
+        flex: 2;
+        display: flex;
+    }
+    
+    .footer-left .brain-img {
+        height: 60px;
+        margin-right: 20px;
+    }
+    
+    .footer-left h2 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    
+    .footer-left p {
+        margin: 5px 0 0;
+        font-size: 14px;
+        color: #b3b3b3;
+    }
+    
+    .footer-center {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .read-more-btn {
+        border: 1px solid #666;
+        background-color: transparent;
+        color: #ffffff;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    
+    .read-more-btn:hover {
+        background-color: #333;
+    }
+    
+    .footer-right {
+        flex: 1;
+        text-align: right;
+    }
+    
+    .user-icons {
+        display: flex;
+        justify-content: flex-end;
+        gap: -10px;
+        margin-bottom: 10px;
+    }
+    
+    .user-icon {
+        width: 29px;
+        height: 29px;
+        border-radius: 50%;
+        border: 2px solid #ffffff;
+    }
+    
+    .user-count {
+        font-size: 14px;
+        color: #b3b3b3;
+        line-height: 1.2;
+    }
+    
+   </style>
+</head>
+
+<body>
+    <nav class="nav">
+        <div class="logo">
+            <img src="{% static 'images/none.png' %}" alt="Logo">
+        </div>
+        <div class="links">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'About' %}">About</a></li>
+                <li><a href="{% url 'Articles' %}">Articles</a></li>
+                <li style="margin-right: 73px;"><button id="signupBtn" class="btn">Sign Up</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <!-- <div class="pop-left">
+                 <video src="static/videos/cubic.mp4" controls></video>
+            </div> -->
+            <div class="pop-right">
+                <h2>Signup</h2>
+                <form id="signupForm">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <button type="submit" class="btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-main">
+        <div class="first">
+            <div class="nav1">
+                <div class="home">
+                    <a href="{% url 'home' %}"><img src="{% static 'images/home.png' %}" alt="Home"></a>
+                </div>
+                <div class="explore">
+                    <a href="{% url 'detect_ai' %}"><img src="{% static 'images/upload.png' %}" alt="Explore"></a>
+                </div>
+                <div class="profile2">
+                    <a href="{% url 'About' %}"><img src="{% static 'images/profile.png' %}" alt="Profile"></a>
+                </div>
+                <div class="about">
+                    <a href="{% url 'Articles' %}"><img src="{% static 'images/about.png' %}" alt="About"></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="second">
+            <div class="section1">
+                <div class="robot">
+                    <spline-viewer url="https://prod.spline.design/cYN2Ri1JqNo03tHB/scene.splinecode"></spline-viewer>
+                </div>
+                <div class="first-content">
+                    <div class="left">
+                        <h1>Secure Your World with Next-Gen Deepfake Detection!</h1>
+                        <p style="opacity: 0.7; font-size: 15px;">Deepfakes pose a significant threat to media
+                            integrity, personal security, and societal trust.</p>
+                        <button class="btn"><a href="{% url 'detect_ai' %}">Upload</a></button>
+                    </div>
+                    <div class="between" style="flex: 0.8;"></div>
+                    <div class="right">
+                        <p>We've developed an advanced system for detecting manipulated audio
+                            and images, ensuring that digital content remains authentic and trustworthy.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section2">
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <div class="video-container">
+                            <video src="static/videos/MC Video Project.mp4" controls></video>
+                            <div class="overlay-content">
+                                <p>This is the first video</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <div class="video-container">
+                            <video src="static\videos\2nd-video.mp4" controls></video>
+                            <div class="overlay-content">
+                                <p>This is the second video</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <div class="video-container">
+                            <video src="#" controls></video>
+                            <div class="overlay-content">
+                                <p>This is the third video</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <div class="video-container">
+                            <video src="#" controls></video>
+                            <div class="overlay-content">
+                                <p>This is the fourth video</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section3" >
+                <h1> Our Mission</h1>
+                <div class="mission-container" style="padding-top:20px;">
+                    <button class="mission1">Ensuring Digital Integrity</button>
+                    <button class="mission">Empowering Users</button>
+                    <button class="mission">Combatting Misinformation</button>
+                    <button class="mission">Promoting Truth in Media</button>
+                </div>
+                <div class="mission-container">
+                    <button class="mission">Enhancing Security</button>
+                    <button class="mission">Advancing AI Ethics</button>
+                    <button class="mission1">Building Trust Online</button>
+                    <button class="mission">Supporting Law Enforcement</button>
+                </div>
+                <div class="mission-container">
+                    <button class="mission1">Collaboration for Better Security</button>
+                    <button class="mission">Fostering Innovation</button>
+                    <button class="mission">Educating the Public</button>
+                    <button class="mission1">Protecting Privacy</button>
+                </div>
+                
+                <div class="cards">
+                    <div class="card" style="flex: 1;">
+                        <img width="60" height="60" src="https://img.icons8.com/3d-fluency/150/lunacy.png" alt="lunacy"/>                    
+                         <p>Our mission is to provide a reliable and user-friendly platform that empowers individuals
+                            and organizations to verify the authenticity of their digital content.</p>
+                    </div>
+                    <div class="card" style="flex: 1;">
+                        <img width="70" height="70" src="https://img.icons8.com/3d-fluency/188/services--v2.png" alt="services--v2"/>
+                        <p>Our platform offers advanced detection tools that analyze images and audio files to determine
+                            whether they are AI-generated or genuine. </p>
+                    </div>
+                    <div class="card" style="flex: 1;">
+                        <img width="60" height="60" src="https://img.icons8.com/3d-fluency/94/puzzle.png" alt="puzzle"/>
+                        <p>Our algorithms are designed to achieve high precision in detecting AI-generated content,
+                            reducing the risk of misidentification.</p>
+                    </div>
+                </div>
+            </div>
+           <div class="sec4" >
+            <h1 style="text-align: center; padding:30px 0px 30px 0px; background-color:#1c1c1c;">What Our Website Does</h1>
+            <div class="section4">
+                <div class="s4-text">
+                    <h1>Image Detection</h1>
+                    <p style="color: #dedede;">In a world where images can be easily manipulated, how can you be sure what you’re seeing is real? Our deepfake image detection tool is here to protect you from deception. Imagine being able to verify the authenticity of any photo with just a few clicks. Whether it’s a profile picture that looks a little too perfect or a news photo that seems suspicious, our tool digs deep into every pixel to uncover any hidden edits. Stay informed, and don’t let fake images pull the wool over your eyes. </p>
+                </div>
+                <div class="s4-image">
+                    <img src="static/images/FAKE (2).png">
+                </div>
+            </div>
+            <div class="section4">
+                <div class="s4-image" >
+                    <img src="static/images/audio.png">
+                </div>
+                <div class="s4-text">
+                    <h1>Audio Detection</h1>
+                    <p style="color: #dedede;">Ever heard a voice that just didn’t seem right? With deepfake technology on the rise, it’s becoming harder to trust what you hear. But you don’t have to be in the dark. Our audio detection tool helps you unmask fake voices and reveal the truth. It carefully analyzes sound patterns and detects the subtle clues that indicate a voice has been artificially generated. Whether it’s a suspicious phone call or a too-good-to-be-true recording, our tool ensures you know the difference. Don’t let deepfake audio lead you astray—hear the truth.</p>
+                </div>
+            </div>
+           </div>
+        </div>
+          
+
+        <div class="third">
+            <div class="blocks">
+                <h3>Collaboration Partners</h3>
+                <div class="block1">
+                    <img src="static/images/midjourney.png" alt="Midjourney">
+                    <div class="block-content">
+                        <p>Midjourney</p>
+                        <a href="https://www.midjourney.com/home">www.midjourney.com</a>
+                    </div>
+                </div>
+                <div class="block1">
+                    <img src="static/images/leonardo.png" alt="Leonardo">
+                    <div class="block-content">
+                        <p>Leonardo</p>
+                        <a href="https://app.leonardo.ai/">www.leonardo.com</a>
+                    </div>
+                </div>
+                <div class="block1">
+                    <img src="static/images/elevenlabs.png" alt="Eleven Labs">
+                    <div class="block-content">
+                        <p>Eleven Labs</p>
+                        <a href="https://elevenlabs.io/">www.elevenlabs.io</a>
+                    </div>
+                </div>
+                <div class="block1">
+                    <img src="static/images/amazonpolly.png" alt="Amazon Polly">
+                    <div class="block-content">
+                        <p>Amazon Polly</p>
+                        <a href="https://aws.amazon.com/polly/">www.amazonpolly.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="custom-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <img src="static/images/none.png" alt="Brain Image" class="brain-img">
+                <div>
+                    <h2>Deepfakes Detector</h2>
+                    <p>"Spot Deepfakes with Confidence: Your Go-To Tool for Authentic Images and Audio."</p>
+                </div>
+            </div>
+            <div class="footer-center">
+                <button class="read-more-btn">Read More</button>
+            </div>
+            <div class="footer-right">
+                <div class="user-icons">
+                    <img src="static/images/linkdin.png" alt="User 1" class="user-icon">
+                    <img src="static/images/twitter.png" alt="User 2" class="user-icon">
+                    <img src="static/images/facebook.png" alt="User 3" class="user-icon">
+                </div>
+                <p class="user-count">120K<br>Number of users</p>
+            </div>
+        </div>
+    </footer>
+    
+
+
+
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.7.7/build/spline-viewer.js"></script>
+    <script>
+        const signupBtn = document.getElementById('signupBtn');
+        const popup = document.getElementById('popup');
+        const closeBtn = document.querySelector('.close-btn');
+        signupBtn.addEventListener('click', () => {
+            popup.style.display = 'flex';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            popup.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === popup) {
+                popup.style.display = 'none';
+            }
+        });
+
+        const signupForm = document.getElementById('signupForm');
+        signupForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            alert('Signup form submitted!');
+            popup.style.display = 'none';
+        });
+    </script>
+   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const gridItems = document.querySelectorAll('.grid-item');
+        const section2 = document.querySelector('.section2');
+
+        const observer = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                gridItems.forEach((item, index) => {
+                    setTimeout(() => item.classList.add('fade-in'));
+                });
+                observer.unobserve(section2); 
+            }
+        }, { threshold: 0.1 });
+
+        observer.observe(section2);
+    });
+</script>
+
+    
+</body>
+
+</html>

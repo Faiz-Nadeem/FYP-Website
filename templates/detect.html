@@ -1,0 +1,201 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Detection</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto:wght@400&display=swap');
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .first {
+            position: absolute;
+            top: 0; 
+            left: 0;
+            background-color: #161617;
+            top: 89px;
+            padding: 25px 30px 200px 30px;
+            margin-left:8px;
+            border-radius: 12px;
+        }
+        .nav1 {
+            margin-top: 140px;
+        }
+        .home {
+            margin-bottom: 30px;
+        }
+        
+        .home img {
+            margin: 13px 10px 0px 0px;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .profile2 {
+            margin-bottom: 30px;
+        }
+        
+        .profile2 img {
+            margin: 13px 10px 0px 0px;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .explore {
+            margin-bottom: 30px;
+        }
+        
+        .explore img {
+            margin: 13px 10px 0px 0px;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .about img {
+            margin: 13px 10px 0px 0px;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .spline-element {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .spline-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        .spline-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            margin-top: 180px;
+        }
+
+        h1, label, button, p {
+            margin: 10px 0;
+        }
+        .btn{
+        background: transparent;
+        padding: 12px 20px;
+        border-radius: 12px;
+        border: none;
+        position: relative;
+        font-size: 15px;
+        color: white;
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+        overflow: hidden; /* Ensure pseudo-element stays within the button */
+        transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 12px;
+            padding: 2px; /* Adjust the thickness of the border */
+            background: linear-gradient(90deg, rgba(0, 123, 255, 1) 1%, rgba(165, 80, 197, 1) 80%);
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+                    mask-composite: subtract;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            color: rgba(165, 80, 197, 1);
+        }
+        
+        .btn:hover::before {
+            background: linear-gradient(90deg, rgba(0, 123, 255, 1) 1%, rgba(165, 80, 197, 1) 80%);
+        }
+        
+        .btn a {
+            color: white;
+            text-decoration: none;
+            position: relative;
+            z-index: 1;
+            display: block; /* Ensure anchor tag takes full button space */
+            height: 100%; /* Ensure anchor tag takes full button height */
+            width: 100%; /* Ensure anchor tag takes full button width */
+            line-height: 1; /* Adjust line height to match button's content */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="spline-container">
+        <div class="first">
+            <div class="nav1">
+                <div class="home">
+                    <a href="{% url 'home' %}"><img src="{% static 'images/home.png' %}" alt="Home"></a>
+                </div>
+                <div class="explore">
+                    <a href="{% url 'detect_ai' %}"><img src="{% static 'images/upload.png' %}" alt="Explore"></a>
+                </div>
+                <div class="profile2">
+                    <a href="{% url 'About' %}"><img src="{% static 'images/profile.png' %}" alt="Profile"></a>
+                </div>
+                <div class="about">
+                    <a href="{% url 'Articles' %}"><img src="{% static 'images/about.png' %}" alt="About"></a>
+                </div>
+            </div>
+        </div>
+        <div class="spline-element">
+            <spline-viewer url="https://prod.spline.design/tspxbk8Hmzdl3S1r/scene.splinecode"></spline-viewer>
+        </div>
+        <div class="spline-text">
+            <h1>AI-Generated Content Detection</h1>
+            <form method="post" enctype="multipart/form-data" action="{% url 'detect_ai' %}">
+                {% csrf_token %}
+                <label for="file">Choose an image or audio file:</label><br><br>
+                <input type="file" id="file" name="file" accept="image/*,audio/*"  required><br><br>
+                <button type="submit" class="btn">Check if AI Generated</button>
+            </form>
+            {% if uploaded_image %}
+            <h2>Uploaded Image:</h2>
+            <img src="{{ uploaded_image }}" alt="Uploaded Image" style="max-width: 300px; max-height: 300px;">
+            {% endif %}
+            {% if result %}
+           
+            <p>{{ result }}</p>
+            {% endif %}
+        </div>
+    </div>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.20/build/spline-viewer.js"></script>
+</body>
+
+</html>
